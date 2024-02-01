@@ -1,22 +1,35 @@
 import { useState } from "react"
 
+type Lang = "PL" | "EN"
+type TabProps = { lang: Lang }
+
 export const Page = () => {
 	const [tab, setTab] = useState(0)
+	const [lang, setLang] = useState<Lang>("EN")
 
 	return (
 		<div className='bg-gray-900 py-24 sm:py-32 h-screen flex items-center justify-center'>
 			<div className='relative isolate'>
 				<div className='mx-auto max-w-7xl sm:px-6 lg:px-8'>
 					<div className='mx-auto flex max-w-2xl flex-col gap-16 bg-white/5 px-6 py-16 ring-1 ring-white/10 sm:rounded-3xl sm:p-8 lg:mx-0 lg:max-w-none lg:flex-row lg:items-center lg:py-20 xl:gap-x-20 xl:px-20 relative'>
+						<button
+							type='button'
+							onClick={() => {
+								setLang(prev => (prev === "PL" ? "EN" : "PL"))
+							}}
+							className='rounded-full bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 absolute right-7 top-7'
+						>
+							{lang}
+						</button>
 						<img
 							className='h-96 w-full flex-none rounded-2xl object-scale-down shadow-xl lg:aspect-square lg:h-auto lg:max-w-sm'
 							src='/karek.png'
 							alt=''
 						/>
 						<div className='w-full flex-auto'>
-							{tab === 0 && <Tab1 />}
-							{tab === 1 && <Tab2 />}
-							{tab === 2 && <Tab3 />}
+							{tab === 0 && <Tab1 lang={lang} />}
+							{tab === 1 && <Tab2 lang={lang} />}
+							{tab === 2 && <Tab3 lang={lang} />}
 						</div>
 						<button
 							type='button'
@@ -52,15 +65,15 @@ const links = {
 	Blog: "https://dogtronic.io/author/karolus/",
 }
 
-const Tab1 = () => (
+const Tab1 = ({ lang }: TabProps) => (
 	<>
 		<h2 className='text-3xl font-bold tracking-tight text-white sm:text-4xl'>
 			Full-Stack Developer
 		</h2>
 		<p className='mt-6 text-lg leading-8 text-gray-300'>
-			Cześć, nazywam się Karol Ścibior i jestem programistą. Zajmuje się
-			technologiami webowymi, DevOps oraz projektowaniem i zarządzaniem
-			projektami informatycznymi od 2020 roku.
+			{lang === "PL"
+				? "Cześć, nazywam się Karol Ścibior i prowadzę działalność programistyczną NodeDog. Moja firma zajmuje się się technologiami webowymi, DevOps oraz projektowaniem i zarządzaniem projektami informatycznymi od 2020 roku."
+				: "Hi, my name is Karol Scibior and I run a software development business called NodeDog. My company deals with web technologies, DevOps and design and management of IT projects since 2020."}
 		</p>
 		<ul className='mt-10 grid grid-cols-1 gap-x-8 gap-y-3 text-base leading-7 text-white sm:grid-cols-2'>
 			{Object.entries(links).map(([key, value]) => (
@@ -97,15 +110,15 @@ const technologies = [
 	"Google Cloud Platform",
 ]
 
-const Tab2 = () => (
+const Tab2 = ({ lang }: TabProps) => (
 	<>
 		<h2 className='text-3xl font-bold tracking-tight text-white sm:text-4xl'>
-			Moje technologie
+			{lang === "PL" ? "Technologie" : "Technologies"}
 		</h2>
 		<p className='mt-6 text-lg leading-8 text-gray-300'>
-			Na codzień zajmuje się głównie programowaniem w TypeScript oraz
-			automatyzacją procesów w projektach, nie jest mi jednak obca praca z
-			klientem ani zarządanie zespołem.
+			{lang === "PL"
+				? "Na codzień zajmuje się głównie programowaniem w TypeScript oraz automatyzacją procesów w projektach, nie jest mi jednak obca praca z klientem ani zarządzanie zespołem."
+				: "On a day-to-day basis, I mainly program in TypeScript and automate processes in projects, but I am no stranger to working with clients or managing a team."}
 		</p>
 		<div className='mt-10 flex gap-4 flex-wrap'>
 			{technologies.map(technology => (
@@ -117,21 +130,22 @@ const Tab2 = () => (
 	</>
 )
 
-const Tab3 = () => (
+const Tab3 = ({ lang }: TabProps) => (
 	<>
 		<h2 className='text-3xl font-bold tracking-tight text-white sm:text-4xl'>
-			Kontakt
+			{lang === "PL" ? "Kontakt" : "Contact"}
 		</h2>
 		<p className='mt-6 text-lg leading-8 text-gray-300'>
-			Masz problem z którym nie możesz sobie poradzić? Chcesz się podzielić
-			swoim pomysłem na projekt? A może po prostu chcesz się przywitać?
+			{lang === "PL"
+				? "Masz problem z którym nie możesz sobie poradzić? Chcesz się podzielić swoim pomysłem na projekt? A może po prostu chcesz się przywitać?"
+				: "Do you have a problem you can't handle? Want to share your project idea? Or maybe you just want to say hello?"}
 		</p>
 		<div className='mt-10 flex'>
 			<a
 				href='mailto:karol.scibior98@gmail.com'
 				className='text-sm font-semibold leading-6 text-indigo-400'
 			>
-				Napisz do mnie!
+				{lang === "PL" ? "Napisz do mnie!" : "Contact me!"}
 			</a>
 		</div>
 	</>
